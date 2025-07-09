@@ -1,0 +1,25 @@
+namespace Domain.Users;
+
+public sealed class User
+{
+    public Guid Id { get; private set; } = Guid.Empty;
+    public string Email { get; private set; } = string.Empty;
+    public string PasswordHash { get; private set; } = string.Empty;
+    public UserName Names = default!;
+    public DateTime CreatedTime { get; private set; }
+
+    private User() { }
+
+    public static User CreateNew(string email, string passwordHash,
+        string firstName, string? lastName, DateTime createdTime)
+    {
+        return new User()
+        {
+            Id = Guid.NewGuid(),
+            Email = email,
+            PasswordHash = passwordHash,
+            Names = UserName.CreateNew(firstName, lastName),
+            CreatedTime = createdTime
+        };
+    }
+}
