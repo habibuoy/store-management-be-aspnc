@@ -28,8 +28,8 @@ internal sealed class PasswordHasher : IPasswordHasher
         if (string.IsNullOrEmpty(inputPassword)
             || string.IsNullOrEmpty(hashedPassword))
         {
-            return Error.Problem("PasswordHasher.InvalidInput",
-                "Input password or hashed password cannot be null or empty");
+            return Error.Problem(IPasswordHasherExtensions.InvalidInputCode,
+                IPasswordHasherExtensions.InvalidInputDetail);
         }
 
         var splitted = hashedPassword.Split(".+");
@@ -46,7 +46,8 @@ internal sealed class PasswordHasher : IPasswordHasher
 
         if (!hashedInput.SequenceEqual(hash))
         {
-            return Error.Problem("PasswordHasher.Wrong", "Input password was incorrect");
+            return Error.Problem(IPasswordHasherExtensions.IncorrectPasswordCode,
+                IPasswordHasherExtensions.IncorrectPasswordDetail);
         }
 
         return Result.Succeed();
