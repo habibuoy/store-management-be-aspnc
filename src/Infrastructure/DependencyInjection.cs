@@ -1,4 +1,5 @@
 using Application.Abstractions.Authentication;
+using Application.Abstractions.Data;
 using Infrastructure.Authentication;
 using Infrastructure.Common;
 using Infrastructure.Database;
@@ -28,6 +29,8 @@ public static class DependencyInjection
         services.AddNpgsql<ApplicationDbContext>(connectionString,
             null,
             options => options.UseSnakeCaseNamingConvention());
+        
+        services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 
         return services;
     }
