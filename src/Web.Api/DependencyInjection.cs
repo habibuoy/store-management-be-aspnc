@@ -1,3 +1,5 @@
+using System.Text.Json;
+using Microsoft.AspNetCore.Http.Json;
 using Web.Api.Middlewares;
 
 namespace Web.Api;
@@ -12,6 +14,11 @@ public static class DependencyInjection
 
         services.AddProblemDetails();
         services.AddExceptionHandler<GlobalExceptionHandler>();
+
+        services.Configure<JsonOptions>(options =>
+        {
+            options.SerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+        });
 
         return services;
     }
