@@ -1,3 +1,4 @@
+using System.Reflection;
 using Application.Abstractions.Messaging;
 using Application.Decorators;
 using FluentValidation;
@@ -22,9 +23,24 @@ public static class DependencyInjection
 
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly, includeInternalTypes: true);
 
-        services.Decorate(typeof(ICommandHandler<>), typeof(ValidationDecorator.CommandHandler<>));
-        services.Decorate(typeof(ICommandHandler<,>), typeof(ValidationDecorator.CommandHandler<,>));
+        if (CheckIfAssemblyImplementationOf(typeof(ICommandHandler<>)))
+        {
+            services.Decorate(typeof(ICommandHandler<>), typeof(ValidationDecorator.CommandHandler<>));
+        }
+
+        if (CheckIfAssemblyImplementationOf(typeof(ICommandHandler<,>)))
+        {
+            services.Decorate(typeof(ICommandHandler<,>), typeof(ValidationDecorator.CommandHandler<,>));
+        }
 
         return services;
+    }
+
+    private static bool CheckIfAssemblyImplementationOf(Type type)
+    {
+        return Assembly.GetAssembly(typeof(DependencyInjection)) is Assembly assembly
+            && assembly
+                .GetTypes()
+                .Any(t => t is { IsAbstract: false, IsInterface: false } && t.IsAssignableTo(type));
     }
 }
