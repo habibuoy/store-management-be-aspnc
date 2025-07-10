@@ -6,7 +6,10 @@ using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Shared;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Infrastructure;
 
@@ -17,6 +20,8 @@ public static class DependencyInjection
     {
         services.AddDatabase(configuration);
         services.AddServices();
+        services.AddAuthenticationInternal(configuration);
+        services.AddAuthorizationInternal();
 
         return services;
     }
@@ -29,7 +34,7 @@ public static class DependencyInjection
         services.AddNpgsql<ApplicationDbContext>(connectionString,
             null,
             options => options.UseSnakeCaseNamingConvention());
-        
+
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 
         return services;
@@ -40,6 +45,38 @@ public static class DependencyInjection
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
+        return services;
+    }
+
+    private static IServiceCollection AddAuthenticationInternal(this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                var jwtSection = configuration.GetSection(JwtDefaults.SectionName);
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(jwtSection.GetValue<string>(JwtDefaults.SecretSection)!)),
+                    ValidIssuer = jwtSection.GetValue<string>(JwtDefaults.ValidIssuerSection),
+                    ValidAudiences = jwtSection.GetValue<string[]>(JwtDefaults.ValidAudiencesSection),
+                    ClockSkew = TimeSpan.Zero,
+                    ValidateAudience = true,
+                    ValidateIssuer = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true
+                };
+            });
+
+        return services;
+    }
+
+    private static IServiceCollection AddAuthorizationInternal(this IServiceCollection services)
+    {
+        services
+            .AddAuthorization();
         return services;
     }
 }

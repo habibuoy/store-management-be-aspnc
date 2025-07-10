@@ -22,8 +22,12 @@ if (app.Environment.IsDevelopment())
     app.ApplyMigrations();
 }
 
-app.UseHttpsRedirection();
-app.MapEndpoints(Assembly.GetExecutingAssembly());
 app.UseExceptionHandler();
+
+app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapEndpoints(Assembly.GetExecutingAssembly());
 
 app.Run();
