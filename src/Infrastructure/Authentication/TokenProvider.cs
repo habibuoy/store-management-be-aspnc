@@ -12,8 +12,8 @@ internal class TokenProvider(IConfiguration configuration) : ITokenProvider
 {
     public string CreateFor(User user)
     {
-        var jwt = configuration.GetSection(JwtDefaults.SectionName);
-        var secret = jwt.GetValue<string>(JwtDefaults.SecretSection)!;
+        var jwt = configuration.GetSection(JwtDefaults.SectionName).Get<JwtOptions>()!;
+        var secret = jwt.Secret;
 
         var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
         var credentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
@@ -26,9 +26,9 @@ internal class TokenProvider(IConfiguration configuration) : ITokenProvider
                     new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString())
                 ]
             ),
-            Expires = DateTime.UtcNow.AddMinutes(jwt.GetValue<int>(JwtDefaults.ExpirationInMinutesSection)),
+            Expires = DateTime.UtcNow.AddMinutes(jwt.ExpirationInMinutes),
             SigningCredentials = credentials,
-            Issuer = jwt.GetValue<string>(JwtDefaults.ValidIssuerSection),
+            Issuer = jwt.ValidIssuer,
             Audience = "developer"
         };
 

@@ -56,18 +56,18 @@ public static class DependencyInjection
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
-                var jwtSection = configuration.GetSection(JwtDefaults.SectionName);
+                var jwtSection = configuration.GetSection(JwtDefaults.SectionName).Get<JwtOptions>()!;
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
                     IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(jwtSection.GetValue<string>(JwtDefaults.SecretSection)!)),
-                    ValidIssuer = jwtSection.GetValue<string>(JwtDefaults.ValidIssuerSection),
-                    ValidAudiences = jwtSection.GetValue<string[]>(JwtDefaults.ValidAudiencesSection),
+                        Encoding.UTF8.GetBytes(jwtSection.Secret)),
+                    ValidIssuer = jwtSection.ValidIssuer,
+                    ValidAudiences = jwtSection.ValidAudiences,
                     ClockSkew = TimeSpan.Zero,
                     ValidateAudience = true,
                     ValidateIssuer = true,
                     ValidateIssuerSigningKey = true,
-                    ValidateLifetime = true
+                    ValidateLifetime = true,
                 };
             });
 
