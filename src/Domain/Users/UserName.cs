@@ -5,6 +5,9 @@ public sealed class UserName
     public string First { get; private set; } = string.Empty;
     public string? Last { get; private set; }
 
+    public void UpdateFirst(string name) => First = name;
+    public void UpdateLast(string? name) => Last = name;
+
     private UserName() { }
 
     private UserName(string firstName, string? lastName)

@@ -10,6 +10,12 @@ public sealed class User
 
     private User() { }
 
+    public void UpdateDetail(string firstName, string? lastName)
+    {
+        Name.UpdateFirst(firstName);
+        Name.UpdateLast(lastName);
+    }
+
     public static User CreateNew(string email, string passwordHash,
         string firstName, string? lastName, DateTime createdTime)
     {
