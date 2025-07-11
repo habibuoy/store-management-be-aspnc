@@ -5,7 +5,7 @@ public sealed class User
     public Guid Id { get; private set; } = Guid.Empty;
     public string Email { get; private set; } = string.Empty;
     public string PasswordHash { get; private set; } = string.Empty;
-    public UserName Names = default!;
+    public UserName Name { get; private set; } = default!;
     public DateTime CreatedTime { get; private set; }
 
     private User() { }
@@ -18,7 +18,7 @@ public sealed class User
             Id = Guid.NewGuid(),
             Email = email,
             PasswordHash = passwordHash,
-            Names = UserName.CreateNew(firstName, lastName),
+            Name = UserName.CreateNew(firstName, lastName),
             CreatedTime = createdTime
         };
     }

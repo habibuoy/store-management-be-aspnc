@@ -10,7 +10,7 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
     {
         builder.ToTable("user");
 
-        var owned = builder.OwnsOne(u => u.Names);
+        var owned = builder.OwnsOne(u => u.Name);
 
         owned
             .Property(n => n.First).HasColumnName("first_name");
