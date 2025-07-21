@@ -32,5 +32,18 @@ internal sealed class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
             .WithOne()
             .HasForeignKey<UserRole>(ur => ur.RoleId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasIndex(ur => ur.UserId)
+            .IsUnique(false);
+
+        builder.HasIndex(ur => ur.RoleId)
+            .IsUnique(false);
+
+        builder.HasIndex(ur => new
+        {
+            ur.UserId,
+            ur.RoleId
+        })
+            .IsUnique(true);
     }
 }
