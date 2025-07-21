@@ -30,11 +30,29 @@ public static class CustomHttpResults
         BadRequest<ProblemDetails>,
         NotFound<ProblemDetails>,
         Conflict<ProblemDetails>,
-        ProblemHttpResult> TypedFrom<TValue, TResult>(Result<TValue> result, Func<TValue, TResult> onSuccess) where TResult : IResult
+        ProblemHttpResult> TypedFrom<TValue, TResult>(Result<TValue> result,
+            Func<TValue, TResult> onSuccess) where TResult : IResult
     {
         if (result.IsSuccess)
         {
             return onSuccess(result.Value);
+        }
+
+        return InternalProblemFrom<TResult>(result);
+    }
+
+    public static Results<
+        TResult,
+        BadRequest<ProblemDetails>,
+        NotFound<ProblemDetails>,
+        Conflict<ProblemDetails>,
+        ProblemHttpResult> TypedFrom<TValue, TResult>(Result<TValue> result,
+            Func<TValue, HttpContext?, TResult> onSuccess,
+            HttpContext? context = null) where TResult : IResult
+    {
+        if (result.IsSuccess)
+        {
+            return onSuccess(result.Value, context);
         }
 
         return InternalProblemFrom<TResult>(result);
