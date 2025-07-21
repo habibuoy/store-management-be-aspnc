@@ -11,6 +11,16 @@ public sealed class Role
 
     private Role() { }
 
+    public void UpdateName(string name)
+    {
+        Name = Name.CreateNew(name);
+    }
+
+    public void UpdateDescription(string? description)
+    {
+        Description = description;
+    }
+
     public static Role CreateNew(string name, string? description,
         DateTime createdTime)
     {
