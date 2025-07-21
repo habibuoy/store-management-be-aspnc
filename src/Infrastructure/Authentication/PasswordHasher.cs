@@ -17,7 +17,7 @@ internal sealed class PasswordHasher : IPasswordHasher
         ArgumentException.ThrowIfNullOrEmpty(password);
 
         var salt = RandomNumberGenerator.GetBytes(SaltSize);
-        var hash = Rfc2898DeriveBytes.Pbkdf2(password, salt, IterationCount, HashAlgorithmName.SHA512, HashSize);
+        var hash = Rfc2898DeriveBytes.Pbkdf2(password, salt, IterationCount, Algorithm, HashSize);
 
         var combined = $"{Convert.ToHexString(hash)}.+{Convert.ToHexString(salt)}";
         return combined;
