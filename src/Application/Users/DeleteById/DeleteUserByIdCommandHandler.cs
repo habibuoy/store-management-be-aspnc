@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Shared;
 
-namespace Application.Users.Delete;
+namespace Application.Users.DeleteById;
 
-internal sealed class DeleteUserCommandHandler(IApplicationDbContext dbContext,
-    ILogger<DeleteUserCommandHandler> logger)
-    : ICommandHandler<DeleteUserCommand>
+internal sealed class DeleteUserByIdCommandHandler(IApplicationDbContext dbContext,
+    ILogger<DeleteUserByIdCommandHandler> logger)
+    : ICommandHandler<DeleteUserByIdCommand>
 {
-    public async Task<Result> HandleAsync(DeleteUserCommand command, CancellationToken cancellationToken)
+    public async Task<Result> HandleAsync(DeleteUserByIdCommand command, CancellationToken cancellationToken)
     {
         try
         {
@@ -33,19 +33,19 @@ internal sealed class DeleteUserCommandHandler(IApplicationDbContext dbContext,
         {
             logger.LogError(ex, "DB error has occurred while deleting user '{command.UserId}' 's detail from DB",
                 command.UserId);
-            return ApplicationErrors.DBOperationError(nameof(DeleteUserCommandHandler),
+            return ApplicationErrors.DBOperationError(nameof(DeleteUserByIdCommandHandler),
                 $"DB error has occurred while deleting user '{command.UserId}' 's detail from DB");
         }
         catch (OperationCanceledException ex)
         {
             logger.LogError(ex, "");
-            return ApplicationErrors.OperationCancelledError(nameof(DeleteUserCommandHandler), ex.Message);
+            return ApplicationErrors.OperationCancelledError(nameof(DeleteUserByIdCommandHandler), ex.Message);
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Unexpected error has occurred while deleting user '{command.UserId}' 's detail from DB",
                 command.UserId);
-            return ApplicationErrors.UnexpectedError(nameof(DeleteUserCommandHandler),
+            return ApplicationErrors.UnexpectedError(nameof(DeleteUserByIdCommandHandler),
                 $"Unexpected error has occurred while deleting user '{command.UserId}' 's detail from DB");
         }
     }

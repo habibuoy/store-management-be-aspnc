@@ -1,18 +1,18 @@
 using Application.Abstractions.Messaging;
-using Application.Users.Delete;
+using Application.Users.DeleteById;
 using Web.Api.Infrastructure;
 
 namespace Web.Api.Endpoints.Users;
 
-internal sealed class Delete : UserEndpoint
+internal sealed class DeleteById : UserEndpoint
 {
     public override IEndpointRouteBuilder MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapDelete("/{id}", static async (Guid id,
-            ICommandHandler<DeleteUserCommand> handler,
+            ICommandHandler<DeleteUserByIdCommand> handler,
             CancellationToken cancellationToken) =>
         {
-            var command = new DeleteUserCommand(id);
+            var command = new DeleteUserByIdCommand(id);
 
             var result = await handler.HandleAsync(command, cancellationToken);
 
