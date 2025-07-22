@@ -8,11 +8,17 @@ public sealed class Brand
 
     private Brand() { }
 
-    public static Brand CreateNew(string name)
+    public void UpdateName(string name)
+    {
+        Name = name;
+    }
+
+    public static Brand CreateNew(string name, DateTime CreateTime)
     {
         return new()
         {
-            Name = name
+            Name = name,
+            CreatedTime = CreateTime
         };
     }
 }
