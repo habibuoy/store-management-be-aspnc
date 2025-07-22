@@ -11,37 +11,37 @@ namespace Application.Roles.UpdateById;
 internal sealed class UpdateRoleByIdCommandHandler(
     IApplicationDbContext dbContext,
     ILogger<UpdateRoleByIdCommandHandler> logger
-) : ICommandHandler<UpdateRoleByIdCommand, UpdateRoleResponse>
+) : ICommandHandler<UpdateRoleByIdCommand, UpdateRoleByIdResponse>
 {
-    public async Task<Result<UpdateRoleResponse>> HandleAsync(UpdateRoleByIdCommand command,
+    public async Task<Result<UpdateRoleByIdResponse>> HandleAsync(UpdateRoleByIdCommand command,
         CancellationToken cancellationToken)
     {
-        var role = await dbContext.Roles
-            .FirstOrDefaultAsync(r => r.Id == command.Id, cancellationToken);
-
-        if (role == null)
-        {
-            return RoleErrors.NotFound(command.Id);
-        }
-
-        var existingRoleWithName = await dbContext.Roles
-            .FirstOrDefaultAsync(r => r.Name.Normalized == command.Name.ToLower().Trim(),
-                cancellationToken);
-
-        if (existingRoleWithName != null)
-        {
-            return RoleErrors.AlreadyExist(command.Name);
-        }
-
         try
         {
+            var role = await dbContext.Roles
+                .FirstOrDefaultAsync(r => r.Id == command.Id, cancellationToken);
+
+            if (role == null)
+            {
+                return RoleErrors.NotFound(command.Id);
+            }
+
+            var existingRoleWithName = await dbContext.Roles
+                .FirstOrDefaultAsync(r => r.Name.Normalized == command.Name.ToLower().Trim(),
+                    cancellationToken);
+
+            if (existingRoleWithName != null)
+            {
+                return RoleErrors.AlreadyExist(command.Name);
+            }
+
             role.UpdateName(command.Name);
             role.UpdateDescription(command.Description);
 
             dbContext.Roles.Update(role);
             await dbContext.SaveChangesAsync(cancellationToken);
 
-            return new UpdateRoleResponse(role.Name.Value, role.Name.Normalized, role.Description);
+            return new UpdateRoleByIdResponse(role.Name.Value, role.Name.Normalized, role.Description);
         }
         catch (DbUpdateException ex)
         {

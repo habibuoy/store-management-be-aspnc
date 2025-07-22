@@ -4,7 +4,7 @@ using Web.Api.Infrastructure;
 
 namespace Web.Api.Endpoints.Roles;
 
-internal sealed class Delete : RoleEndpoint
+internal sealed class DeleteById : RoleEndpoint
 {
     public override IEndpointRouteBuilder MapEndpoint(IEndpointRouteBuilder app)
     {

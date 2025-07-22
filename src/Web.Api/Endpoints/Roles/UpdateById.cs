@@ -1,18 +1,19 @@
 using Application.Abstractions.Messaging;
 using Application.Roles.UpdateById;
+using Microsoft.AspNetCore.Mvc;
 using Web.Api.Infrastructure;
 
 namespace Web.Api.Endpoints.Roles;
 
-internal sealed class Update : RoleEndpoint
+internal sealed class UpdateById : RoleEndpoint
 {
     public sealed record UpdateRoleRequest(string Name, string? Description);
 
     public override IEndpointRouteBuilder MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPut("/{id:int}", static async (int id,
-            [AsParameters] UpdateRoleRequest request,
-            ICommandHandler<UpdateRoleByIdCommand, UpdateRoleResponse> handler,
+            [FromBody] UpdateRoleRequest request,
+            ICommandHandler<UpdateRoleByIdCommand, UpdateRoleByIdResponse> handler,
             CancellationToken cancellationToken
         ) =>
         {

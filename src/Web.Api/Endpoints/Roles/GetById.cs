@@ -1,19 +1,20 @@
 using Application.Abstractions.Messaging;
-using Application.Roles.GetRolesByUser;
+using Application.Roles;
+using Application.Roles.GetById;
 using Web.Api.Infrastructure;
 
 namespace Web.Api.Endpoints.Roles;
 
-internal sealed class GetRolesByUser : RoleEndpoint
+internal sealed class GetById : RoleEndpoint
 {
     public override IEndpointRouteBuilder MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("/users/{user}", static async (string user,
-            IQueryHandler<GetRolesByUserQuery, List<UserRoleResponse>> handler,
+        app.MapGet("/{id:int}", static async (int id,
+            IQueryHandler<GetRoleByIdQuery, RoleResponse> handler,
             CancellationToken cancellationToken
         ) =>
         {
-            var query = new GetRolesByUserQuery(user);
+            var query = new GetRoleByIdQuery(id);
             var result = await handler.HandleAsync(query, cancellationToken);
 
             return CustomHttpResults.TypedFrom(result, static (r) => TypedResults.Ok(r));

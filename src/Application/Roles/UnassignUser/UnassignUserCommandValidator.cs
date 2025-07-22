@@ -2,9 +2,9 @@ using FluentValidation;
 
 namespace Application.Roles.UnassignUser;
 
-internal sealed class UnassignUserValidator : AbstractValidator<UnassignUserCommand>
+internal sealed class UnassignUserCommandValidator : AbstractValidator<UnassignUserCommand>
 {
-    public UnassignUserValidator()
+    public UnassignUserCommandValidator()
     {
         RuleFor(c => c.User)
             .NotEmpty();

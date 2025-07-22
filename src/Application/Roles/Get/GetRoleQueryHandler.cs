@@ -41,7 +41,7 @@ internal sealed class GetRoleQueryHandler(IApplicationDbContext dbContext,
             logger.LogError(ex, "Unexpected error has occurred while querying roles with '{query}'",
                 query);
             return ApplicationErrors.UnexpectedError(nameof(GetRoleQueryHandler),
-                $"Unexpected error has occurred while getting user with '{query}'");
+                $"Unexpected error has occurred while querying roles with '{query}'");
         }
     }
 }

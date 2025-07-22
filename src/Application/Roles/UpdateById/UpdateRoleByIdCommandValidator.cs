@@ -2,10 +2,10 @@ using FluentValidation;
 
 namespace Application.Roles.UpdateById;
 
-internal sealed class UpdateRoleByIdValidator
+internal sealed class UpdateRoleByIdCommandValidator
     : AbstractValidator<UpdateRoleByIdCommand>
 {
-    public UpdateRoleByIdValidator()
+    public UpdateRoleByIdCommandValidator()
     {
         RuleFor(r => r.Name)
             .NotEmpty()

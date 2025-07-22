@@ -24,7 +24,7 @@ public static class RoleErrors
         $"Role with id '{roleId}' has already been assigned to user '{user}'"
     );
 
-    public static Error NotAssigned(int roleId, string user) => Error.Conflict(
+    public static Error NotAssigned(int roleId, string user) => Error.Problem(
         "Roles.NotAssigned",
         $"Role with id '{roleId}' hasn't already been assigned to user '{user}'"
     );
