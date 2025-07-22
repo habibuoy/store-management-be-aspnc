@@ -18,13 +18,13 @@ public sealed class ProductDetail
     private ProductDetail() { }
 
     public static ProductDetail CreateNew(Guid productId, string? description,
-        string brand, float measure, string measureUnit)
+        int brandId, float measure, string measureUnit)
     {
         return new()
         {
             ProductId = productId,
             Description = description,
-            Brand = Brand.CreateNew(brand),
+            BrandId = brandId,
             Measure = measure,
             MeasureUnit = ProductUnit.CreateNew(measureUnit)
         };

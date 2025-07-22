@@ -13,7 +13,7 @@ public sealed class Product
     private Product() { }
 
     public static Product CreateNew(string name, string description,
-        string brand, float measure, string measureUnit, string[] tags,
+        int brandId, float measure, string measureUnit, string[] tags,
         DateTime CreatedTime)
     {
         var id = Guid.NewGuid();
@@ -21,7 +21,7 @@ public sealed class Product
         {
             Id = id,
             Name = name,
-            Detail = ProductDetail.CreateNew(id, description, brand, measure, measureUnit),
+            Detail = ProductDetail.CreateNew(id, description, brandId, measure, measureUnit),
             Tags = [.. tags.Select(ProductTag.CreateNew)],
             CreatedTime = CreatedTime,
             LastUpdatedTime = CreatedTime,
