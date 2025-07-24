@@ -1,4 +1,7 @@
 using Application.Products.Create;
+using Application.Products.ProductTags;
+using Application.Products.ProductTags.Create;
+using Application.Products.ProductTags.UpdateById;
 using Application.Products.ProductUnits;
 using Application.Products.ProductUnits.Create;
 using Application.Products.ProductUnits.UpdateById;
@@ -74,6 +77,24 @@ public static class ProductMapper
     public static UpdateProductUnitByIdResponse ToUpdateByIdResponse(this ProductUnit productUnit)
     {
         return new UpdateProductUnitByIdResponse(productUnit.Id, productUnit.Name.Value,
+            productUnit.Name.Normalized);
+    }
+
+    public static CreateProductTagResponse ToCreateResponse(this ProductTag productUnit)
+    {
+        return new CreateProductTagResponse(productUnit.Id, productUnit.Name.Value,
+            productUnit.Name.Normalized);
+    }
+
+    public static ProductTagResponse ToProductTagResponse(this ProductTag productUnit)
+    {
+        return new ProductTagResponse(productUnit.Id, productUnit.Name.Value,
+            productUnit.Name.Normalized);
+    }
+
+    public static UpdateProductTagByIdResponse ToUpdateByIdResponse(this ProductTag productUnit)
+    {
+        return new UpdateProductTagByIdResponse(productUnit.Id, productUnit.Name.Value,
             productUnit.Name.Normalized);
     }
 }

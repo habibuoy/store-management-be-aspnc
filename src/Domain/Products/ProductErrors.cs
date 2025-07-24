@@ -29,7 +29,7 @@ public static class ProductErrors
         $"Product unit with name '{name}' was not found."
     );
 
-    public static Error UnitAlreadyExists(string name) => Error.NotFound(
+    public static Error UnitAlreadyExists(string name) => Error.Conflict(
         "Products.UnitAlreadyExists",
         $"Product unit with name '{name}' already exists."
     );
@@ -37,5 +37,15 @@ public static class ProductErrors
     public static Error UnitIsStillReferenced(int id) => Error.Conflict(
         "Products.UnitIsStillReferenced",
         $"Cannot delete product unit with id '{id}', it is still referenced by other entities."
+    );
+
+    public static Error TagNotFound(int id) => Error.NotFound(
+        "Products.TagNotFound",
+        $"Product tag with id '{id}' was not found."
+    );
+
+    public static Error TagAlreadyExists(string name) => Error.Conflict(
+        "Products.TagAlreadyExists",
+        $"Product tag with name '{name}' already exists."
     );
 }
