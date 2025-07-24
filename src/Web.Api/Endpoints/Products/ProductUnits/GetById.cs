@@ -4,11 +4,11 @@ using Application.Products.ProductUnits.GetById;
 using Web.Api.Infrastructure;
 namespace Web.Api.Endpoints.Products.ProductUnits;
 
-internal sealed class GetById : ProductEndpoint
+internal sealed class GetById : ProductUnitEndpoint
 {
     public override IEndpointRouteBuilder MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("/product-units/{id:int}", static async (
+        base.MapEndpoint(app).MapGet("/{id:int}", static async (
             int id,
             IQueryHandler<GetProductUnitByIdQuery, ProductUnitResponse> handler,
             CancellationToken cancellationToken

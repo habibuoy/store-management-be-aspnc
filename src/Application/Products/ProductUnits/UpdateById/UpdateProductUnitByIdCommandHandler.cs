@@ -53,7 +53,7 @@ internal sealed class UpdateProductUnitByIdCommandHandler(
             logger.LogError(ex, "DB error has occurred while updating product unit with id '{command.Id}' to DB",
                 command.Id);
             return ApplicationErrors.DBOperationError(nameof(UpdateProductUnitByIdCommandHandler),
-                $"DB error has occurred while updating productUnit with id '{command.Id}' to DB");
+                $"DB error has occurred while updating product unit with id '{command.Id}' to DB");
         }
         catch (OperationCanceledException ex)
         {

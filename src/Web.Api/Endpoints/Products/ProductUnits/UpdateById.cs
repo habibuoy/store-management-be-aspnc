@@ -5,13 +5,13 @@ using Web.Api.Infrastructure;
 
 namespace Web.Api.Endpoints.Products.ProductUnits;
 
-internal sealed class UpdateById : ProductEndpoint
+internal sealed class UpdateById : ProductUnitEndpoint
 {
     public sealed record UpdateProductUnitByIdRequest(string Name);
 
     public override IEndpointRouteBuilder MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPut("/product-units/{id:int}", static async (
+        base.MapEndpoint(app).MapPut("/{id:int}", static async (
             int id,
             [FromBody] UpdateProductUnitByIdRequest request,
             ICommandHandler<UpdateProductUnitByIdCommand, UpdateProductUnitByIdResponse> handler,

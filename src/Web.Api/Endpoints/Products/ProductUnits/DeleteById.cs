@@ -4,11 +4,11 @@ using Web.Api.Infrastructure;
 
 namespace Web.Api.Endpoints.Products.ProductUnits;
 
-internal sealed class DeleteById : ProductEndpoint
+internal sealed class DeleteById : ProductUnitEndpoint
 {
     public override IEndpointRouteBuilder MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapDelete("/product-units/{id:int}", static async (
+        base.MapEndpoint(app).MapDelete("/{id:int}", static async (
             int id,
             ICommandHandler<DeleteProductUnitByIdCommand> handler,
             CancellationToken cancellationToken

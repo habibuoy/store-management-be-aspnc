@@ -5,13 +5,13 @@ using Application.Products.ProductUnits.Get;
 using Web.Api.Infrastructure;
 namespace Web.Api.Endpoints.Products.ProductUnits;
 
-internal sealed class Get : ProductEndpoint
+internal sealed class Get : ProductUnitEndpoint
 {
     public sealed record GetProductUnitRequest(string? Search, string? SortOrder);
 
     public override IEndpointRouteBuilder MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("/product-units", static async (
+        base.MapEndpoint(app).MapGet("/", static async (
             [AsParameters] GetProductUnitRequest request,
             IQueryHandler<GetProductUnitQuery, List<ProductUnitResponse>> handler,
             CancellationToken cancellationToken
