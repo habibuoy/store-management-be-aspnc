@@ -1,4 +1,7 @@
 using Application.Products.Create;
+using Application.Products.ProductUnits;
+using Application.Products.ProductUnits.Create;
+using Application.Products.ProductUnits.UpdateById;
 using Application.Products.UpdateById;
 using Domain.Products;
 
@@ -54,5 +57,23 @@ public static class ProductMapper
             productPrice.Value,
             [.. product.Tags.Select(t => t.Name.Value)]
         );
+    }
+
+    public static CreateProductUnitResponse ToCreateResponse(this ProductUnit productUnit)
+    {
+        return new CreateProductUnitResponse(productUnit.Id, productUnit.Name.Value,
+            productUnit.Name.Normalized);
+    }
+
+    public static ProductUnitResponse ToProductUnitResponse(this ProductUnit productUnit)
+    {
+        return new ProductUnitResponse(productUnit.Id, productUnit.Name.Value,
+            productUnit.Name.Normalized);
+    }
+
+    public static UpdateProductUnitByIdResponse ToUpdateByIdResponse(this ProductUnit productUnit)
+    {
+        return new UpdateProductUnitByIdResponse(productUnit.Id, productUnit.Name.Value,
+            productUnit.Name.Normalized);
     }
 }

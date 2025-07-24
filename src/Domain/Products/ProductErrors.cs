@@ -28,4 +28,14 @@ public static class ProductErrors
         "Products.UnitNotFound",
         $"Product unit with name '{name}' was not found."
     );
+
+    public static Error UnitAlreadyExists(string name) => Error.NotFound(
+        "Products.UnitAlreadyExists",
+        $"Product unit with name '{name}' already exists."
+    );
+
+    public static Error UnitIsStillReferenced(int id) => Error.Conflict(
+        "Products.UnitIsStillReferenced",
+        $"Cannot delete product unit with id '{id}', it is still referenced by other entities."
+    );
 }

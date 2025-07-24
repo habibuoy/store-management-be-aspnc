@@ -12,6 +12,11 @@ public sealed class ProductUnit
 
     private ProductUnit() { }
 
+    public void UpdateName(string name)
+    {
+        Name = Name.CreateNew(name);
+    }
+
     public static ProductUnit CreateNew(string name)
     {
         return new()
