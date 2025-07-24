@@ -15,11 +15,13 @@ namespace Infrastructure.Database;
 public sealed class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     private readonly ILogger<ApplicationDbContext> logger;
-    
+
     public DbSet<User> Users { get; private set; }
     public DbSet<Role> Roles { get; private set; }
     public DbSet<UserRole> UserRoles { get; private set; }
     public DbSet<Product> Products { get; private set; }
+    public DbSet<ProductDetail> ProductDetails { get; private set; }
+    public DbSet<ProductPrice> ProductPrices { get; private set; }
     public DbSet<ProductUnit> ProductUnits { get; private set; }
     public DbSet<ProductTag> ProductTags { get; private set; }
     public DbSet<Brand> Brands { get; private set; }

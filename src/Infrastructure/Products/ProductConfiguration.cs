@@ -34,6 +34,8 @@ internal sealed class ProductDetailConfiguration : IEntityTypeConfiguration<Prod
 {
     public void Configure(EntityTypeBuilder<ProductDetail> builder)
     {
+        builder.ToTable("product_detail");
+
         builder
             .HasKey(pd => pd.ProductId);
 
@@ -55,7 +57,7 @@ internal sealed class ProductPriceConfiguration : IEntityTypeConfiguration<Produ
 {
     public void Configure(EntityTypeBuilder<ProductPrice> builder)
     {
-        
+        builder.ToTable("product_price");
     }
 }
 
@@ -63,6 +65,8 @@ internal sealed class ProductTagConfiguration : IEntityTypeConfiguration<Product
 {
     public void Configure(EntityTypeBuilder<ProductTag> builder)
     {
+        builder.ToTable("product_tag");
+
         builder
             .OwnsOne(pt => pt.Name)
             .ConfigureNameProperty();
@@ -73,6 +77,8 @@ internal sealed class ProductUnitConfiguration : IEntityTypeConfiguration<Produc
 {
     public void Configure(EntityTypeBuilder<ProductUnit> builder)
     {
+        builder.ToTable("product_unit");
+
         builder
             .OwnsOne(pu => pu.Name)
             .ConfigureNameProperty();

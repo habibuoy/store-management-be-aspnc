@@ -14,6 +14,8 @@ public interface IApplicationDbContext
     public DbSet<Role> Roles { get; }
     public DbSet<UserRole> UserRoles { get; }
     public DbSet<Product> Products { get; }
+    public DbSet<ProductDetail> ProductDetails { get; }
+    public DbSet<ProductPrice> ProductPrices { get; }
     public DbSet<ProductUnit> ProductUnits { get; }
     public DbSet<ProductTag> ProductTags { get; }
     public DbSet<Brand> Brands { get; }

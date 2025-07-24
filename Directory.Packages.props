@@ -12,6 +12,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageVersion>
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.6" />
     <PackageVersion Include="Scrutor" Version="6.1.0" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <PackageVersion Include="EFCore.NamingConventions" Version="9.0.0" />

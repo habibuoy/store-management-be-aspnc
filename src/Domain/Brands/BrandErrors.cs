@@ -13,4 +13,9 @@ public static class BrandErrors
         "Brands.NotFound",
         $"Brand with id '{id}' was not found"
     );
+
+    public static Error NotFound(string name) => Error.NotFound(
+        "Brands.NotFound",
+        $"Brand with name '{name}' was not found"
+    );
 }

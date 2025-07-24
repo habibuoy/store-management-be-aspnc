@@ -7,15 +7,20 @@ public sealed class ProductPrice
     public decimal Value { get; private set; }
     public DateTime CreatedTime { get; private set; }
     public DateTime ValidFromTime { get; private set; }
-    public DateTime ValidToTime { get; private set; }
+    public DateTime? ValidToTime { get; private set; }
 
     // navs
     public Product? Product { get; private set; } = default!;
 
     private ProductPrice() { }
 
+    public void UpdateValidToTime(DateTime validTo)
+    {
+        ValidToTime = validTo;
+    }
+
     public static ProductPrice CreateNew(Guid productId, decimal value,
-        DateTime createdTime, DateTime validFrom, DateTime validTo)
+        DateTime createdTime, DateTime validFrom, DateTime? validTo)
     {
         return new()
         {

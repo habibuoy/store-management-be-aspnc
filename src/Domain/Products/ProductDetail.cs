@@ -17,8 +17,14 @@ public sealed class ProductDetail
 
     private ProductDetail() { }
 
+    public void UpdateMeasure(float value, ProductUnit unit)
+    {
+        Measure = value;
+        MeasureUnit = unit;
+    }
+
     public static ProductDetail CreateNew(Guid productId, string? description,
-        int brandId, float measure, string measureUnit)
+        int brandId, float measure, int measureUnitId)
     {
         return new()
         {
@@ -26,7 +32,7 @@ public sealed class ProductDetail
             Description = description,
             BrandId = brandId,
             Measure = measure,
-            MeasureUnit = ProductUnit.CreateNew(measureUnit)
+            MeasureUnitId = measureUnitId,
         };
     }
 }

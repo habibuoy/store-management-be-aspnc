@@ -12,8 +12,33 @@ public sealed class Product
 
     private Product() { }
 
-    public static Product CreateNew(string name, string description,
-        int brandId, float measure, string measureUnit, string[] tags,
+    public void UpdateName(string name)
+    {
+        Name = name;
+    }
+
+    public void UpdateDetail(ProductDetail detail)
+    {
+        Detail = detail;
+    }
+
+    public void UpdateTags(List<ProductTag> tags)
+    {
+        Tags = tags;
+    }
+
+    public void AddPrice(ProductPrice price)
+    {
+        Prices.Add(price);
+    }
+
+    public void UpdateLastUpdatedTime(DateTime dateTime)
+    {
+        LastUpdatedTime = dateTime;
+    }
+
+    public static Product CreateNew(string name, string? description,
+        int brandId, float measure, int measureUnitId, ProductTag[] tags,
         DateTime CreatedTime)
     {
         var id = Guid.NewGuid();
@@ -21,8 +46,8 @@ public sealed class Product
         {
             Id = id,
             Name = name,
-            Detail = ProductDetail.CreateNew(id, description, brandId, measure, measureUnit),
-            Tags = [.. tags.Select(ProductTag.CreateNew)],
+            Detail = ProductDetail.CreateNew(id, description, brandId, measure, measureUnitId),
+            Tags = tags,
             CreatedTime = CreatedTime,
             LastUpdatedTime = CreatedTime,
         };
