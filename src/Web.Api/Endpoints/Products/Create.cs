@@ -2,6 +2,7 @@ using Application.Abstractions.Messaging;
 using Application.Products.Create;
 using Microsoft.AspNetCore.Mvc;
 using Web.Api.Infrastructure;
+using Web.Api.Common;
 
 namespace Web.Api.Endpoints.Products;
 
@@ -27,7 +28,8 @@ internal sealed class Create : ProductEndpoint
             var result = await handler.HandleAsync(command, cancellationToken);
 
             return CustomHttpResults.TypedFrom(result,
-                static (r, ctx) => TypedResults.Created($"{ctx!.Request.Host.Value}/products/{r.Id}", r), httpContext);
+                static (r, ctx) => TypedResults.Created($"{ctx.ToUriFullAbsolutePath()}/{r.Id}", r),
+                httpContext);
         });
         return app;
     }

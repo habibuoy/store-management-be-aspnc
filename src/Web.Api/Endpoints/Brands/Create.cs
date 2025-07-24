@@ -2,6 +2,7 @@ using Application.Abstractions.Messaging;
 using Application.Brands.Create;
 using Microsoft.AspNetCore.Mvc;
 using Web.Api.Infrastructure;
+using Web.Api.Common;
 
 namespace Web.Api.Endpoints.Brands;
 
@@ -22,7 +23,8 @@ internal sealed class Create : BrandEndpoint
             var result = await handler.HandleAsync(command, cancellationToken);
 
             return CustomHttpResults.TypedFrom(result,
-                static (r, ctx) => TypedResults.Created($"{ctx!.Request.Host.Value}/brands/{r.Id}"), httpContext);
+                static (r, ctx) => TypedResults.Created($"{ctx.ToUriFullAbsolutePath()}/{r.Id}"),
+                httpContext);
         });
 
         return app;

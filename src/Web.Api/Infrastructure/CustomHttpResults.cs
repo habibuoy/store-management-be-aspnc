@@ -47,9 +47,11 @@ public static class CustomHttpResults
         NotFound<ProblemDetails>,
         Conflict<ProblemDetails>,
         ProblemHttpResult> TypedFrom<TValue, TResult>(Result<TValue> result,
-            Func<TValue, HttpContext?, TResult> onSuccess,
-            HttpContext? context = null) where TResult : IResult
+            Func<TValue, HttpContext, TResult> onSuccess,
+            HttpContext context) where TResult : IResult
     {
+        ArgumentNullException.ThrowIfNull(context);
+
         if (result.IsSuccess)
         {
             return onSuccess(result.Value, context);
