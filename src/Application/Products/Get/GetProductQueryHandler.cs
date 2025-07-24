@@ -44,10 +44,10 @@ internal sealed class GetProductQueryHandler(
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Unexpected error has occurred while querying Products with '{query}'",
+            logger.LogError(ex, "Unexpected error has occurred while querying products with '{query}'",
                 query);
             return ApplicationErrors.UnexpectedError(nameof(GetProductQueryHandler),
-                $"Unexpected error has occurred while querying Products with '{query}'");
+                $"Unexpected error has occurred while querying products with '{query}'");
         }
     }
 }

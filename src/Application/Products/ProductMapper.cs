@@ -1,6 +1,5 @@
 using Application.Products.Create;
 using Application.Products.UpdateById;
-using Domain.Brands;
 using Domain.Products;
 
 namespace Application.Products;
@@ -10,7 +9,7 @@ public static class ProductMapper
     public static ProductResponse ToProductResponse(this Product product)
     {
         var measureUnit = product.Detail.MeasureUnit;
-        var productUnit = new ProductUnitResponse(measureUnit!.Id, measureUnit.Name.Value);
+        var productUnit = new MeasureUnitResponse(measureUnit!.Id, measureUnit.Name.Value);
         return new ProductResponse(product.Id,
             product.Name,
             product.Detail.Description,

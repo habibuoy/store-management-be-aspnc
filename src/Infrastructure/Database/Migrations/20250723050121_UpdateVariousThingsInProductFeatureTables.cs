@@ -114,7 +114,7 @@ namespace Infrastructure.Database.Migrations
                 principalSchema: "public",
                 principalTable: "product_unit",
                 principalColumn: "id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "fk_product_product_tag_product_tag_tags_id",
@@ -235,7 +235,7 @@ namespace Infrastructure.Database.Migrations
                 principalSchema: "public",
                 principalTable: "product_units",
                 principalColumn: "id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
             
             migrationBuilder.AddForeignKey(
                 name: "fk_product_product_tag_product_tags_tags_id",

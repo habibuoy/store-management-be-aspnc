@@ -32,9 +32,6 @@ internal sealed class GetProductByIdQueryHandler(
                 return ProductErrors.NotFound(query.Id);
             }
 
-            var detail = product.Detail;
-            var measureUnit = detail.MeasureUnit!.Name.Value;
-
             return product.ToProductResponse();
         }
         catch (OperationCanceledException ex)
