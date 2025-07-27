@@ -19,6 +19,11 @@ public static class ProductErrors
         $"Product price with id '{id}' was not found."
     );
 
+    public static Error PriceInUse(Guid id) => Error.Conflict(
+        "Products.PriceInUse",
+        $"Product price with id '{id}' is still in use."
+    );
+
     public static Error UnitNotFound(int id) => Error.NotFound(
         "Products.UnitNotFound",
         $"Product unit with id '{id}' was not found."

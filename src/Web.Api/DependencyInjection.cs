@@ -30,6 +30,8 @@ public static class DependencyInjection
         services
             .AddSwaggerGen(options =>
             {
+                options.CustomSchemaIds(id => id.FullName!.Replace('+', '.'));
+
                 var securityScheme = new OpenApiSecurityScheme()
                 {
                     Name = "JWT Authentication",

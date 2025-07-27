@@ -1,4 +1,6 @@
 using Application.Products.Create;
+using Application.Products.ProductPrices;
+using Application.Products.ProductPrices.UpdateById;
 using Application.Products.ProductTags;
 using Application.Products.ProductTags.Create;
 using Application.Products.ProductTags.UpdateById;
@@ -96,5 +98,21 @@ public static class ProductMapper
     {
         return new UpdateProductTagByIdResponse(productUnit.Id, productUnit.Name.Value,
             productUnit.Name.Normalized);
+    }
+
+    public static ProductPriceResponse ToProductPriceResponse(this ProductPrice productPrice)
+    {
+        return new ProductPriceResponse(
+            productPrice.Id,
+            productPrice.Value,
+            productPrice.ProductId,
+            productPrice.CreatedTime,
+            productPrice.ValidFromTime,
+            productPrice.ValidToTime);
+    }
+
+    public static UpdateProductPriceByIdResponse ToUpdateByIdResponse(this ProductPrice productPrice)
+    {
+        return new UpdateProductPriceByIdResponse(productPrice.Id, productPrice.Value);
     }
 }

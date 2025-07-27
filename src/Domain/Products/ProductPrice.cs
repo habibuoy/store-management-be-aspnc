@@ -14,6 +14,11 @@ public sealed class ProductPrice
 
     private ProductPrice() { }
 
+    public void UpdateValue(decimal value)
+    {
+        Value = value;
+    }
+
     public void UpdateValidToTime(DateTime validTo)
     {
         ValidToTime = validTo;
@@ -25,6 +30,20 @@ public sealed class ProductPrice
         return new()
         {
             Id = Guid.NewGuid(),
+            ProductId = productId,
+            Value = value,
+            CreatedTime = createdTime,
+            ValidFromTime = validFrom,
+            ValidToTime = validTo
+        };
+    }
+
+    public static ProductPrice CreateNew(Guid id, Guid productId, decimal value,
+        DateTime createdTime, DateTime validFrom, DateTime? validTo)
+    {
+        return new()
+        {
+            Id = id,
             ProductId = productId,
             Value = value,
             CreatedTime = createdTime,
