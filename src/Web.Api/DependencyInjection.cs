@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Json;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.OpenApi.Models;
 using Web.Api.Middlewares;
 
@@ -30,7 +31,21 @@ public static class DependencyInjection
         services
             .AddSwaggerGen(options =>
             {
-                options.CustomSchemaIds(id => id.FullName!.Replace('+', '.'));
+                options.CustomSchemaIds(type =>
+                {
+                    var fullName = type.FullName;
+                    if (type.IsGenericType)
+                    {
+                        var genericArguments = type.GetGenericArguments();
+                        var genericArgumentNames = string.Join(", ", genericArguments
+                            .Select(arg => arg.ShortDisplayName()));
+
+                        var name = type.Name.Remove(type.Name.IndexOf('`'), 2);
+                        return $"{type.Namespace}.{name}<{genericArgumentNames}>";
+                    }
+
+                    return fullName!.Replace('+', '.');
+                });
 
                 var securityScheme = new OpenApiSecurityScheme()
                 {
