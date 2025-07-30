@@ -30,7 +30,7 @@ internal sealed class UpdateProductPriceByIdCommandHandler(
 
             if (product == null)
             {
-                return ProductErrors.PriceNotFound(command.Id);
+                return ProductErrors.NotFound(command.Id);
             }
 
             var dtNow = dtProvider.UtcNow;

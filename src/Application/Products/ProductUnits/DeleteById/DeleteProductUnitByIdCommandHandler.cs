@@ -41,7 +41,7 @@ internal sealed class DeleteProductUnitByIdCommandHandler(
                 logger.LogWarning("Attempting to delete product unit with id '{command.Id}' " +
                     "that is still referenced by other entities",
                     command.Id);
-                return ProductErrors.UnitIsStillReferenced(command.Id);
+                return ProductErrors.UnitIsStillInUse(command.Id);
             }
             logger.LogError(ex, "DB error has occurred while deleting product unit with id '{command.Id}' from DB",
                 command.Id);

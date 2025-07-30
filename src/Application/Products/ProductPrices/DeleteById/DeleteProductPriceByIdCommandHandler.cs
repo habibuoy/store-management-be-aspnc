@@ -4,6 +4,7 @@ using Application.Common;
 using Domain.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Npgsql;
 using Shared;
 
 namespace Application.Products.ProductPrices.DeleteById;
@@ -39,6 +40,14 @@ internal sealed class DeleteProductPriceByIdCommandHandler(
         }
         catch (DbUpdateException ex)
         {
+            if (ex.InnerException is PostgresException pex
+                && pex.SqlState == ApplicationErrorDefaults.PostgreSQLOnDeleteRestrictViolationCode)
+            {
+                logger.LogWarning("Attempting to delete product price with id '{command.Id}' " +
+                    "that is still referenced by other entities",
+                    command.Id);
+                return ProductErrors.PriceInUse(command.Id);
+            }
             logger.LogError(ex, "DB error has occurred while deleting product price with id '{command.Id}' from DB",
                 command.Id);
             return ApplicationErrors.DBOperationError(nameof(DeleteProductPriceByIdCommandHandler),

@@ -4,6 +4,7 @@ using Application.Common;
 using Domain.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Npgsql;
 using Shared;
 
 namespace Application.Products.DeleteById;
@@ -33,6 +34,14 @@ internal sealed class DeleteProductByIdCommandHandler(
         }
         catch (DbUpdateException ex)
         {
+            if (ex.InnerException is PostgresException pex
+                && pex.SqlState == ApplicationErrorDefaults.PostgreSQLOnDeleteRestrictViolationCode)
+            {
+                logger.LogWarning("Attempting to delete product unit with id '{command.Id}' " +
+                    "that is still referenced by other entities",
+                    command.Id);
+                return ProductErrors.InUse(command.Id);
+            }
             logger.LogError(ex, "DB error has occurred while deleting product with id '{command.Id}' from DB",
                 command.Id);
             return ApplicationErrors.DBOperationError(nameof(DeleteProductByIdCommandHandler),

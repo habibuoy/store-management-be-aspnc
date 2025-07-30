@@ -11,7 +11,12 @@ public static class ProductErrors
 
     public static Error AlreadyExists(string name, string brand, int brandId) => Error.Conflict(
         "Products.AlreadyExist",
-        $"Product with name '{name}' and brand '{brand} (id: {brandId})' already exists"
+        $"Product with name '{name}' and brand '{brand} (id: {brandId})' already exists."
+    );
+
+    public static Error InUse(Guid id) => Error.Conflict(
+        "Products.InUse",
+        $"Product with id '{id}' is still in use."
     );
 
     public static Error PriceNotFound(Guid id) => Error.NotFound(
@@ -39,9 +44,9 @@ public static class ProductErrors
         $"Product unit with name '{name}' already exists."
     );
 
-    public static Error UnitIsStillReferenced(int id) => Error.Conflict(
+    public static Error UnitIsStillInUse(int id) => Error.Conflict(
         "Products.UnitIsStillReferenced",
-        $"Cannot delete product unit with id '{id}', it is still referenced by other entities."
+        $"Cannot delete product unit with id '{id}', it is still in use."
     );
 
     public static Error TagNotFound(int id) => Error.NotFound(
