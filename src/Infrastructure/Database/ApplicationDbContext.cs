@@ -9,6 +9,7 @@ using Infrastructure.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Application.Abstractions.Data;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Infrastructure.Database;
 
@@ -26,6 +27,7 @@ public sealed class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<ProductTag> ProductTags { get; private set; }
     public DbSet<Brand> Brands { get; private set; }
     public DbSet<Purchase> Purchases { get; private set; }
+    public DbSet<PurchaseProductEntry> PurchaseProductEntries { get; private set; }
     public DbSet<PurchaseTag> PurchaseTags { get; private set; }
     public DbSet<Sale> Sales { get; private set; }
     public DbSet<SaleTag> SaleTags { get; private set; }

@@ -38,6 +38,8 @@ internal sealed class PurchaseProductEntryConfiguration : IEntityTypeConfigurati
 {
     public void Configure(EntityTypeBuilder<PurchaseProductEntry> builder)
     {
+        builder.ToTable("purchase_product_entry");
+
         builder
             .HasOne(pe => pe.Product)
             .WithMany()

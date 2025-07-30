@@ -14,4 +14,9 @@ public class ProductEntry
     public ProductPrice? ProductPrice { get; protected set; }
 
     protected ProductEntry() { }
+
+    public void UpdateQuantity(int quantity)
+    {
+        Quantity = quantity;
+    }
 }

@@ -12,4 +12,13 @@ public static class CommonValidators
             .WithErrorCode("StringArrayWithNoEmptyElementValidator")
             .WithMessage("'{PropertyName}' should not have any element with empty or null value");
     }
+
+    public static IRuleBuilderOptions<T, IList<TElement>>
+        MustNotHaveAnyNullElement<T, TElement>(this IRuleBuilder<T, IList<TElement>> builder)
+    {
+        return builder
+            .Must(static (list) => list.All(element => element != null))
+            .WithErrorCode("ListWithNoEmptyElementValidator")
+            .WithMessage("'{PropertyName}' should not have any element with null value");
+    }
 }

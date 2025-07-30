@@ -20,6 +20,7 @@ public interface IApplicationDbContext
     public DbSet<ProductTag> ProductTags { get; }
     public DbSet<Brand> Brands { get; }
     public DbSet<Purchase> Purchases { get; }
+    public DbSet<PurchaseProductEntry> PurchaseProductEntries { get; }
     public DbSet<PurchaseTag> PurchaseTags { get; }
     public DbSet<Sale> Sales { get; }
     public DbSet<SaleTag> SaleTags { get; }
