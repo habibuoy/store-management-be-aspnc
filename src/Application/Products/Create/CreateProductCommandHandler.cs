@@ -51,18 +51,13 @@ internal sealed class CreateProductCommandHandler(
 
         try
         {
-            var inputTags = command.Tags.Distinct().Select(ProductTag.CreateNew);
-            var normalizedInputTags = inputTags.Select(t => t.Name.Normalized);
-
-            var existingTags = await dbContext.ProductTags
-                .Where(t => normalizedInputTags.Contains(t.Name.Normalized))
-                .ToArrayAsync(cancellationToken);
-
-            var newTags = inputTags.ExceptBy(existingTags.Select(t => t.Name.Normalized), t => t.Name.Normalized);
-            var productTags = existingTags.Concat(newTags);
-
             var product = Product.CreateNew(command.Name, command.Description, brand.Id,
-                command.Measure, unit.Id, [.. productTags], dtNow);
+                command.Measure, unit.Id, dtNow);
+
+            var tags = await TagsHelper.CreateSynchronizedTags(command.Tags, ProductTag.CreateNew,
+                product.Tags, dbContext.ProductTags, cancellationToken);
+
+            product.UpdateTags(tags.ToList());
 
             var price = ProductPrice.CreateNew(product.Id, command.Price, dtNow, dtNow, null);
             product.AddPrice(price);

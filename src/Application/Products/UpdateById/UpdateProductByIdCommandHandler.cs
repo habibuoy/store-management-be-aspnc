@@ -63,25 +63,10 @@ internal sealed class UpdateProductByIdCommandHandler(
 
             detail.UpdateMeasure(command.Measure, unit);
 
-            var inputTags = command.Tags.Distinct().Select(ProductTag.CreateNew);
+            var productTags = await TagsHelper.CreateSynchronizedTags(command.Tags, ProductTag.CreateNew,
+                product.Tags, dbContext.ProductTags, cancellationToken);
 
-            var newTags = inputTags.ExceptBy(product.Tags.Select(t => t.Name.Normalized), t => t.Name.Normalized);
-
-            var persistingTags = product.Tags.IntersectBy(inputTags.Select(t => t.Name.Normalized), t => t.Name.Normalized);
-
-            var normalizedNewTags = newTags.Select(t => t.Name.Normalized);
-            var existingNewTags = await dbContext.ProductTags
-                .Where(t => normalizedNewTags.Contains(t.Name.Normalized))
-                .ToArrayAsync(cancellationToken);
-
-            newTags = newTags.ExceptBy(existingNewTags.Select(t => t.Name.Normalized), t => t.Name.Normalized);
-
-            var productTags = new List<ProductTag>();
-            productTags.AddRange(persistingTags);
-            productTags.AddRange(existingNewTags);
-            productTags.AddRange(newTags);
-
-            product.UpdateTags(productTags);
+            product.UpdateTags(productTags.ToList());
 
             var dtNow = dtProvider.UtcNow;
 
