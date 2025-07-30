@@ -21,6 +21,7 @@ public static class DependencyInjection
         services.Configure<JsonOptions>(options =>
         {
             options.SerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+            options.SerializerOptions.AllowTrailingCommas = true;
         });
 
         return services;

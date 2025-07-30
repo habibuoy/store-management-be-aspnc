@@ -10,15 +10,17 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Shared;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace Infrastructure;
 
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration, IWebHostEnvironment environment)
     {
-        services.AddDatabase(configuration);
+        services.AddDatabase(configuration, environment);
         services.AddServices();
         services.AddAuthenticationInternal(configuration);
         services.AddAuthorizationInternal();
@@ -27,13 +29,21 @@ public static class DependencyInjection
     }
 
     private static IServiceCollection AddDatabase(this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration, IWebHostEnvironment environment)
     {
         var connectionString = configuration.GetConnectionString("MainDb");
 
         services.AddNpgsql<ApplicationDbContext>(connectionString,
             null,
-            options => options.UseSnakeCaseNamingConvention());
+            options =>
+            {
+                options.UseSnakeCaseNamingConvention();
+                if (environment.IsDevelopment())
+                {
+                    options.EnableDetailedErrors();
+                    options.EnableSensitiveDataLogging();
+                }
+            });
 
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 
