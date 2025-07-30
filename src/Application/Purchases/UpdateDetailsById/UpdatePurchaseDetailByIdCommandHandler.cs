@@ -30,7 +30,7 @@ internal sealed class UpdatePurchaseDetailsByIdCommandHandler(
 
             var dtNow = dtProvider.UtcNow;
 
-            var tags = await TagsHelper.CreateSynchronizedTags(command.Tags, PurchaseTag.CreateNew, purchase.Tags,
+            var tags = await TagsHelper.CreateSynchronizedTagsAsync(command.Tags, PurchaseTag.CreateNew, purchase.Tags,
                 dbContext.PurchaseTags, cancellationToken);
 
             purchase.UpdateTitle(command.Title);

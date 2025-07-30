@@ -54,7 +54,7 @@ internal sealed class CreateProductCommandHandler(
             var product = Product.CreateNew(command.Name, command.Description, brand.Id,
                 command.Measure, unit.Id, dtNow);
 
-            var tags = await TagsHelper.CreateSynchronizedTags(command.Tags, ProductTag.CreateNew,
+            var tags = await TagsHelper.CreateSynchronizedTagsAsync(command.Tags, ProductTag.CreateNew,
                 product.Tags, dbContext.ProductTags, cancellationToken);
 
             product.UpdateTags(tags.ToList());

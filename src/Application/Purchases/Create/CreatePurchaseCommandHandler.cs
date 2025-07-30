@@ -45,7 +45,7 @@ internal sealed class CreatePurchaseCommandHandler(
             {
                 IEnumerable<PurchaseTag> purchaseTags = [];
 
-                purchaseTags = await TagsHelper.CreateSynchronizedTags(command.Tags, PurchaseTag.CreateNew, purchase.Tags,
+                purchaseTags = await TagsHelper.CreateSynchronizedTagsAsync(command.Tags, PurchaseTag.CreateNew, purchase.Tags,
                     dbContext.PurchaseTags, cancellationToken);
                 
                 purchase.UpdateTags(purchaseTags.ToList());

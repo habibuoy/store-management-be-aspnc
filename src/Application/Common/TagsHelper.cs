@@ -5,7 +5,7 @@ namespace Application.Common;
 
 public static class TagsHelper
 {
-    public async static Task<IEnumerable<T>> CreateSynchronizedTags<T>(string[] inputTagStrings,
+    public async static Task<IEnumerable<T>> CreateSynchronizedTagsAsync<T>(string[] inputTagStrings,
         Func<string, T> tagFactory, IEnumerable<T> entityTags, DbSet<T> tagsTable,
         CancellationToken cancellationToken) where T : Tag
     {
