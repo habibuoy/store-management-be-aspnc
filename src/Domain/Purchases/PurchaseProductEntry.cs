@@ -5,6 +5,7 @@ namespace Domain.Purchases;
 public sealed class PurchaseProductEntry : ProductEntry
 {
     public Guid PurchaseId { get; private set; }
+
     // navs
     public Purchase Purchase { get; private set; } = default!;
 

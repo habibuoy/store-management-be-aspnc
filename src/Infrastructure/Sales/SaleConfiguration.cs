@@ -34,10 +34,12 @@ internal sealed class SaleTagConfiguration : IEntityTypeConfiguration<SaleTag>
     }
 }
 
-internal sealed class PurchaseProductEntryConfiguration : IEntityTypeConfiguration<SaleProductEntry>
+internal sealed class SaleProductEntryConfiguration : IEntityTypeConfiguration<SaleProductEntry>
 {
     public void Configure(EntityTypeBuilder<SaleProductEntry> builder)
     {
+        builder.ToTable("sale_product_entry");
+
         builder
             .HasOne(spe => spe.Product)
             .WithMany()

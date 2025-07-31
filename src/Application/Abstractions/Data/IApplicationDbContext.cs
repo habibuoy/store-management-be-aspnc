@@ -23,6 +23,7 @@ public interface IApplicationDbContext
     public DbSet<PurchaseProductEntry> PurchaseProductEntries { get; }
     public DbSet<PurchaseTag> PurchaseTags { get; }
     public DbSet<Sale> Sales { get; }
+    public DbSet<SaleProductEntry> SaleProductEntries { get; }
     public DbSet<SaleTag> SaleTags { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
