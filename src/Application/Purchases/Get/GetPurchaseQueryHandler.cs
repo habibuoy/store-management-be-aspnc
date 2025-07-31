@@ -54,10 +54,10 @@ internal sealed class GetPurchaseQueryHandler(
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Unexpected error has occurred while getting purchase with '{query}' from DB",
+            logger.LogError(ex, "Unexpected error has occurred while getting purchases with query '{query}' from DB",
                 query);
             return ApplicationErrors.UnexpectedError(nameof(GetPurchaseQueryHandler),
-                $"Unexpected error has occurred while getting purchase with '{query}' from DB");
+                $"Unexpected error has occurred while getting purchases with query '{query}' from DB");
         }
     }
 }

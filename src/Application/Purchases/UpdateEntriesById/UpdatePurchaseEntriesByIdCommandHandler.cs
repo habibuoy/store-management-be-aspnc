@@ -123,10 +123,11 @@ internal sealed class UpdatePurchaseEntriesByIdCommandHandler(
         }
         catch (DbUpdateException ex)
         {
-            logger.LogError(ex, "DB error has occurred while updating purchase with id '{command.Id}' to DB",
+            logger.LogError(ex, "DB error has occurred while updating purchase's product entries " +
+                "with id '{command.Id}' to DB",
                 command.Id);
             return ApplicationErrors.DBOperationError(nameof(UpdatePurchaseEntriesByIdCommandHandler),
-                $"DB error has occurred while updating purchase with id '{command.Id}' to DB");
+                $"DB error has occurred while updating purchase's product entries with id '{command.Id}' to DB");
         }
         catch (OperationCanceledException ex)
         {
@@ -135,10 +136,12 @@ internal sealed class UpdatePurchaseEntriesByIdCommandHandler(
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Unexpected error has occurred while updating purchase with id '{command.Id}' to DB",
+            logger.LogError(ex, "Unexpected error has occurred while updating purchase's product entries " +
+                "with id '{command.Id}' to DB",
                 command.Id);
             return ApplicationErrors.UnexpectedError(nameof(UpdatePurchaseEntriesByIdCommandHandler),
-                $"Unexpected error has occurred while updating purchase with id '{command.Id}' to DB");
+                "Unexpected error has occurred while updating purchase's product entries " +
+                    $"with id '{command.Id}' to DB");
         }
     }
 }
